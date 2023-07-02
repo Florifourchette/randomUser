@@ -1,0 +1,9 @@
+.filtersContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.filtersContainer select {
+  margin: 1em;
+  border: red solid;
+}
