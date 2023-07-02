@@ -1,5 +1,5 @@
 <script lang="ts">
-import Filters from './filters/Filters.vue'
+import SearchBar from './SearchBar.vue';
 
 import { callRandomUSers } from '../utils/Apicall'
 import { defineComponent } from 'vue';
@@ -7,7 +7,7 @@ import { useStore } from '@/stores/store';
 
 
 export default defineComponent({
-    components: { Filters },
+    components: { SearchBar },
     methods: {
         handleUsers(): Array<Object> {
             return callRandomUSers().then((data: Array<Object>) => {
@@ -22,6 +22,9 @@ export default defineComponent({
                 this.storedUsers = this.store.getAllUsers;
                 return this.storedUsers;
             }).catch((error) => { console.log(error); return []; });
+        },
+        handleFilteredUsers(filteredUsers: Array<Object>) {
+            this.storedUsers = filteredUsers
         }
     },
     data() {
@@ -40,7 +43,7 @@ export default defineComponent({
 </script>
 <template>
     <div>
-        <Filters :users="finalUsers" />
+        <SearchBar :users="finalUsers" @newUsersArray="handleFilteredUsers" />
         <button @click.prevent="handleUsers">Test API Call</button>
         <div v-for="( user, index ) in   finalUsers  " :key="index">
             <sui-card>
