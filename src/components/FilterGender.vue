@@ -2,26 +2,19 @@
 import { useStore } from '@/stores/store';
 
 export default {
-    props: {
-        users: {
-            type: Array<Object>,
-            default: []
-        }
-    },
     methods: {
         handleChange() {
+            const store = useStore()
+            const storedUsers = store.getAllUsers
             let filteredUsers: Array<Object> = []
             if (this.current === 2) {
-                filteredUsers = this.users.filter((user) => user.gender === 'female')
-                console.log(this.storedUsers)
+                filteredUsers = storedUsers.filter((user) => user.gender === 'female')
             }
             else if (this.current === 1) {
-                filteredUsers = this.users.filter((user) => user.gender === 'male')
-                console.log(this.storedUsers)
+                filteredUsers = storedUsers.filter((user) => user.gender === 'male')
             }
             else {
-                filteredUsers = this.storedUsers
-                console.log(this.storedUsers)
+                filteredUsers = storedUsers
             }
             console.log(filteredUsers)
 
@@ -30,8 +23,7 @@ export default {
     },
     data() {
         const current = null
-        const store = useStore()
-        const storedUsers = store.getAllUsers
+
         const options: Array<Object> = [
             {
                 text: 'Male',
@@ -47,13 +39,12 @@ export default {
             },
         ]
         return {
-            options, current, storedUsers
+            options, current
         };
     },
     mounted() {
-        console.log(this.current)
     }
-};
+}
 </script>
 
 <template>

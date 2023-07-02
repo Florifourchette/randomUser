@@ -2,30 +2,22 @@
 import { useStore } from '@/stores/store';
 
 export default {
-    props: {
-        users: {
-            type: Array<Object>,
-            default: []
-        }
-    },
     methods: {
         handleInput() {
-            console.log(this.storedUsers)
-
+            const store = useStore()
+            const storedUsers = store.getAllUsers
             this.searchTerm = this.searchTerm.toLowerCase()
             let filteredUsers: Array<Object> = []
-            if (this.searchTerm !== '') { filteredUsers = this.users.filter((user) => user.name.last.toLowerCase().includes(this.searchTerm.toLowerCase()) || user.name.first.toLowerCase().includes(this.searchTerm.toLowerCase())) }
+            if (this.searchTerm !== '') { filteredUsers = storedUsers.filter((user) => user.name.last.toLowerCase().includes(this.searchTerm.toLowerCase()) || user.name.first.toLowerCase().includes(this.searchTerm.toLowerCase())) }
             else {
-                filteredUsers = this.storedUsers
+                filteredUsers = storedUsers
             }
             return this.$emit('newUsersArray', filteredUsers)
         }
     },
     data() {
         const searchTerm: String = ''
-        const store = useStore()
-        const storedUsers = store.getAllUsers
-        return { searchTerm, storedUsers }
+        return { searchTerm }
     },
 
 };
