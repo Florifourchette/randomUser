@@ -31,6 +31,11 @@ export default defineComponent({
                 }]
             }
             else { return this.storedUsers = filteredUsers }
+        },
+        handleClick(user: Object) {
+
+            this.store.setUser(user)
+            console.log(this.store.user)
         }
     },
     data() {
@@ -53,7 +58,7 @@ export default defineComponent({
         <FilterGender :users="finalUsers" @newUsersArray="handleFilteredUsers" />
         <button @click.prevent="handleUsers">Test API Call</button>
         <div v-for="( user, index ) in   finalUsers  " :key="index">
-            <sui-card>
+            <sui-card @click="handleClick(user)">
                 <sui-reveal animated="move">
                     <sui-reveal-content visible>
                         <sui-image :src="`${user.picture?.thumbnail}`" />

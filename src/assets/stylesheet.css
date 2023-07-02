@@ -1,3 +1,7 @@
+main {
+  display: flex;
+}
+
 .filtersContainer {
   display: flex;
   flex-direction: column;
