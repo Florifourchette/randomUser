@@ -1,5 +1,6 @@
 <script lang="ts">
 import SearchBar from './SearchBar.vue';
+import FilterGender from './FilterGender.vue'
 
 import { callRandomUSers } from '../utils/Apicall'
 import { defineComponent } from 'vue';
@@ -7,7 +8,7 @@ import { useStore } from '@/stores/store';
 
 
 export default defineComponent({
-    components: { SearchBar },
+    components: { SearchBar, FilterGender },
     methods: {
         handleUsers(): Array<Object> {
             return callRandomUSers().then((data: Array<Object>) => {
@@ -24,7 +25,12 @@ export default defineComponent({
             }).catch((error) => { console.log(error); return []; });
         },
         handleFilteredUsers(filteredUsers: Array<Object>) {
-            this.storedUsers = filteredUsers
+            console.log(filteredUsers)
+            if (filteredUsers.length === 0) {
+                return [{
+                }]
+            }
+            else { return this.storedUsers = filteredUsers }
         }
     },
     data() {
@@ -44,17 +50,18 @@ export default defineComponent({
 <template>
     <div>
         <SearchBar :users="finalUsers" @newUsersArray="handleFilteredUsers" />
+        <FilterGender :users="finalUsers" @newUsersArray="handleFilteredUsers" />
         <button @click.prevent="handleUsers">Test API Call</button>
         <div v-for="( user, index ) in   finalUsers  " :key="index">
             <sui-card>
                 <sui-reveal animated="move">
                     <sui-reveal-content visible>
-                        <sui-image :src="`${user.picture.thumbnail}`" />
+                        <sui-image :src="`${user.picture?.thumbnail}`" />
                     </sui-reveal-content>
                 </sui-reveal>
                 <sui-card-content>
-                    <sui-card-header>{{ user.name.last }} {{ user.name.first }}</sui-card-header>
-                    <sui-card-meta>{{ user.email }}</sui-card-meta>
+                    <sui-card-header>{{ user.name?.last }} {{ user.name?.first }}</sui-card-header>
+                    <sui-card-meta>{{ user?.email }}</sui-card-meta>
                 </sui-card-content>
             </sui-card>
         </div>
