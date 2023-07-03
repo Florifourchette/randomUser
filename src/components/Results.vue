@@ -1,6 +1,7 @@
 <script lang="ts">
 import SearchBar from './SearchBar.vue';
 import FilterGender from './FilterGender.vue'
+import infiniteScroll from 'vue-infinite-scroll'
 
 import { callRandomUSers } from '../utils/Apicall'
 import { defineComponent } from 'vue';
@@ -9,14 +10,17 @@ import { useStore } from '@/stores/store';
 
 export default defineComponent({
     components: { SearchBar, FilterGender },
+    directives: {
+        infiniteScroll: infiniteScroll,
+    },
     methods: {
-        handleUsers(): Array<Object> {
-            return callRandomUSers().then((data: Array<Object>) => {
-                this.store.setAllUsers(data);
-                this.storedUsers = this.store.getAllUsers;
-                return this.storedUsers;
-            }).catch((error) => { console.log(error); return []; });
-        },
+        // handleUsers(): Array<Object> {
+        //     return callRandomUSers().then((data: Array<Object>) => {
+        //         this.store.setAllUsers(data);
+        //         this.storedUsers = this.store.getAllUsers;
+        //         return this.storedUsers;
+        //     }).catch((error) => { console.log(error); return []; });
+        // },
         handleMoreUsers(): Promise<Array<Object>> {
             return callRandomUSers().then((data: Array<Object>) => {
                 this.store.addUsers(data);
@@ -36,7 +40,24 @@ export default defineComponent({
 
             this.store.setUser(user)
             console.log(this.store.user)
+        },
+        handleScroll() {
+            const bottomOfWindow =
+                document.documentElement.scrollHeight -
+                document.documentElement.clientHeight;
+
+            if (this.scrollPosition >= bottomOfWindow) {
+                callRandomUSers()
+                    .then((data: Array<Object>) => {
+                        this.store.addUsers(data);
+                        this.storedUsers = this.store.getAllUsers;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
         }
+
     },
     data() {
         const store = useStore();
@@ -47,16 +68,25 @@ export default defineComponent({
         finalUsers() {
             console.log(this.storedUsers);
             return this.storedUsers;
+        },
+        scrollPosition() {
+            return window.pageYOffset || document.documentElement.scrollTop;
         }
+    },
+    mounted() {
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    beforeUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
     },
 })
 
 </script>
 <template>
-    <div>
+    <div class="infinite-scroll" v-infinite-scroll="handleScroll">
         <SearchBar :users="finalUsers" @newUsersArray="handleFilteredUsers" />
         <FilterGender :users="finalUsers" @newUsersArray="handleFilteredUsers" />
-        <button @click.prevent="handleUsers">Test API Call</button>
+        <!-- <button @click.prevent="handleUsers">Test API Call</button> -->
         <div v-for="( user, index ) in   finalUsers  " :key="index">
             <sui-card @click="handleClick(user)">
                 <sui-reveal animated="move">

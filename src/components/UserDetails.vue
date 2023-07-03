@@ -29,7 +29,8 @@ export default defineComponent({
         <sui-card-content>
             <sui-card-header>
                 <p>{{ displayedUser.name?.last }} {{ displayedUser.name?.first }}</p>
-                <p>{{ displayedUser.id?.name }}: {{ displayedUser?.id?.value }}</p>
+                <p>{{ displayedUser?.id?.value === null ? 'No ID found' : `${displayedUser.id?.name} :
+                                    ${displayedUser?.id?.value}` }}</p>
             </sui-card-header>
             <sui-card-meta>
                 <h3>Contact</h3>
