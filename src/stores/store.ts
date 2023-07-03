@@ -48,11 +48,11 @@ export const useStore = defineStore({
     // },
   }),
   actions: {
-    setAllUsers(newUsers: Array<Object>) {
-      this.allUsers = newUsers;
-      console.log(this.allUsers);
-      return this.allUsers;
-    },
+    // setAllUsers(newUsers: Array<Object>) {
+    //   this.allUsers = newUsers;
+    //   console.log(this.allUsers);
+    //   return this.allUsers;
+    // },
     addUsers(newUsers: Array<Object>) {
       this.allUsers = this.allUsers.concat(newUsers);
       return this.allUsers;
@@ -60,6 +60,13 @@ export const useStore = defineStore({
     setUser(newUser: Object) {
       this.user = newUser;
       return newUser;
+    },
+    setAllUsersLS(newUsers: Array<Object>) {
+      console.log(newUsers);
+      const currentStorage = JSON.parse(localStorage.allUsers);
+      localStorage.allUsers = JSON.stringify(
+        currentStorage.concat(newUsers)
+      );
     },
   },
   getters: {
