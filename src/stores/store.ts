@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 interface RootState {
   allUsers: Array<Object>;
   filteredUsers: Array<Object>;
+  genderFilter: String;
   user: Object;
   // {
   //   first: String;
@@ -30,6 +31,7 @@ export const useStore = defineStore({
     allUsers: [],
     user: {},
     filteredUsers: [],
+    genderFilter: '',
     // {
     //   first: '',
     //   last: '',
@@ -75,10 +77,20 @@ export const useStore = defineStore({
     },
     setFilteredUsers(newUsers: Array<Object>) {
       localStorage.setItem('filteredUsers', JSON.stringify(newUsers));
-      const storedValue = localStorage.getItem('filteredUsers');
+      const storedUsers = localStorage.getItem('filteredUsers');
 
-      if (storedValue !== null && storedValue !== undefined) {
-        this.filteredUsers = JSON.parse(storedValue);
+      if (storedUsers !== null && storedUsers !== undefined) {
+        this.filteredUsers = JSON.parse(storedUsers);
+      }
+
+      return this.filteredUsers;
+    },
+    setGenderFilter(newFilter: String) {
+      localStorage.setItem('genderFilter', JSON.stringify(newFilter));
+      const storedFilter = localStorage.getItem('genderFilter');
+
+      if (storedFilter !== null && storedFilter !== undefined) {
+        this.genderFilter = JSON.parse(storedFilter);
       }
 
       return this.filteredUsers;
@@ -123,6 +135,9 @@ export const useStore = defineStore({
     },
     getfilteredUsers(): Array<Object> {
       return this.filteredUsers;
+    },
+    getGenderFilter(): String {
+      return this.genderFilter;
     },
     getUser(): Object {
       return this.user;

@@ -21,8 +21,8 @@ export default {
         }
     },
     data() {
-        const current = null
-
+        const current: number = 3
+        const store = useStore()
         const options: Array<Object> = [
             {
                 text: 'Male',
@@ -38,19 +38,17 @@ export default {
             },
         ]
         return {
-            options, current
+            options, current, store
         };
     },
     mounted() {
-        this.current = localStorage.genderFilter
+        const storedFilter = this.store.getGenderFilter
+        if (storedFilter !== null && storedFilter !== undefined) { this.current = parseInt(this.store.getGenderFilter.toString()) }
     },
     watch: {
         current(current) {
-            localStorage.genderFilter = current
+            this.store.setGenderFilter(current)
         },
-        filteredUsers(filteredUsers) {
-            localStorage.filteredUsers = filteredUsers
-        }
 
     }
 }
