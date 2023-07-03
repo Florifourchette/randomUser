@@ -16,14 +16,13 @@ export default {
             else {
                 filteredUsers = storedUsers
             }
-            console.log(filteredUsers)
 
             return this.$emit('newUsersArray', filteredUsers)
         }
     },
     data() {
-        const current = null
-
+        const current: number = 3
+        const store = useStore()
         const options: Array<Object> = [
             {
                 text: 'Male',
@@ -39,10 +38,18 @@ export default {
             },
         ]
         return {
-            options, current
+            options, current, store
         };
     },
     mounted() {
+        const storedFilter = this.store.getGenderFilter
+        if (storedFilter !== null && storedFilter !== undefined) { this.current = parseInt(this.store.getGenderFilter.toString()) }
+    },
+    watch: {
+        current(current) {
+            this.store.setGenderFilter(current)
+        },
+
     }
 }
 </script>
