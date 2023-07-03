@@ -37,7 +37,14 @@ export default defineComponent({
                 return [{
                 }]
             }
-            else { return this.storedUsers = filteredUsers }
+            else {
+                console.log(this.store.getfilteredUsers)
+                this.store.setFilteredUsers(filteredUsers)
+                this.storedUsers = this.store.getfilteredUsers
+                console.log(this.storedUsers)
+                return this.storedUsers
+            }
+
         },
         handleClick(user: Object) {
 
@@ -45,6 +52,7 @@ export default defineComponent({
             console.log(this.store.user)
         },
         handleScroll() {
+            console.log('handle scroll')
             const bottomOfWindow =
                 document.documentElement.scrollHeight -
                 document.documentElement.clientHeight;
@@ -54,23 +62,27 @@ export default defineComponent({
                     .then((data: Array<Object>) => {
                         this.store.addUsers(data);
                         this.store.setAllUsersLS(data)
-                        this.storedUsers = this.store.getAllUsers;
+                        this.storedUsers = this.store.getAllUsers
+                        console.log(this.storedUsers)
+                        return this.storedUsers;
                     })
                     .catch((error) => {
                         console.log(error);
                     });
             }
-        }
+        },
 
     },
     data() {
         const store = useStore();
-        const storedUsers = store.getAllUsers;
-        return { storedUsers, store };
+        let storedUsers: Array<Object> = store.getAllUsers;
+        return {
+            storedUsers,
+            store
+        };
     },
     computed: {
         finalUsers() {
-            console.log(this.storedUsers);
             return this.storedUsers;
         },
         scrollPosition() {

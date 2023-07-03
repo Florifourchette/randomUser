@@ -16,7 +16,6 @@ export default {
             else {
                 filteredUsers = storedUsers
             }
-            console.log(filteredUsers)
 
             return this.$emit('newUsersArray', filteredUsers)
         }
@@ -43,6 +42,16 @@ export default {
         };
     },
     mounted() {
+        this.current = localStorage.genderFilter
+    },
+    watch: {
+        current(current) {
+            localStorage.genderFilter = current
+        },
+        filteredUsers(filteredUsers) {
+            localStorage.filteredUsers = filteredUsers
+        }
+
     }
 }
 </script>

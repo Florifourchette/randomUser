@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 
 interface RootState {
   allUsers: Array<Object>;
+  filteredUsers: Array<Object>;
   user: Object;
   // {
   //   first: String;
@@ -28,6 +29,7 @@ export const useStore = defineStore({
   state: (): RootState => ({
     allUsers: [],
     user: {},
+    filteredUsers: [],
     // {
     //   first: '',
     //   last: '',
@@ -61,17 +63,66 @@ export const useStore = defineStore({
       this.user = newUser;
       return newUser;
     },
+
     setAllUsersLS(newUsers: Array<Object>) {
-      console.log(newUsers);
-      const currentStorage = JSON.parse(localStorage.allUsers);
-      localStorage.allUsers = JSON.stringify(
-        currentStorage.concat(newUsers)
-      );
+      if (localStorage.getItem('allUsers')) {
+        localStorage.allUsers = JSON.stringify(
+          JSON.parse(localStorage.allUsers).concat(newUsers)
+        );
+      } else {
+        localStorage.setItem('allUsers', JSON.stringify(newUsers));
+      }
+    },
+    setFilteredUsers(newUsers: Array<Object>) {
+      localStorage.setItem('filteredUsers', JSON.stringify(newUsers));
+      const storedValue = localStorage.getItem('filteredUsers');
+
+      if (storedValue !== null && storedValue !== undefined) {
+        this.filteredUsers = JSON.parse(storedValue);
+      }
+
+      return this.filteredUsers;
     },
   },
   getters: {
     getAllUsers(): Array<Object> {
+      let displayedUsers: Array<Object> = [];
+      const storedUsers = localStorage.getItem('allUsers');
+      if (storedUsers !== null) {
+        displayedUsers = JSON.parse(storedUsers);
+      } else {
+        displayedUsers = this.allUsers;
+      }
+
+      console.log(displayedUsers);
+      console.log(localStorage.genderFilter);
+
+      const genderFilter = parseInt(localStorage.genderFilter, 10);
+      let filteredUsers: Array<Object> = [];
+      console.log(
+        localStorage.getItem('genderFilter') === null ||
+          localStorage.getItem('genderFilter') === undefined
+          ? 'not working'
+          : 'all good'
+      );
+      if (localStorage.genderFilter === '1') {
+        filteredUsers = displayedUsers.filter((user) => {
+          return user.gender === 'male';
+        });
+      } else if (localStorage.genderFilter === '2') {
+        filteredUsers = displayedUsers.filter(
+          (user) => user.gender === 'female'
+        );
+      } else {
+        filteredUsers = displayedUsers;
+      }
+      console.log(filteredUsers);
+      this.allUsers = filteredUsers;
+      console.log(this.allUsers);
       return this.allUsers;
+    },
+    getfilteredUsers(): Array<Object> {
+      return this.filteredUsers;
     },
     getUser(): Object {
       return this.user;
