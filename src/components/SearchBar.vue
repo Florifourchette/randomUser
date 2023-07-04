@@ -21,7 +21,6 @@ export default {
         return { searchTerm, store }
     },
     mounted() {
-        console.log(this.store)
         const storedFilter = this.store.getSearchFilter
         if (storedFilter !== null && storedFilter !== undefined) { this.searchTerm = this.store.getSearchFilter }
     },
