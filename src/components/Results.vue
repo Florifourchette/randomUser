@@ -19,40 +19,33 @@ export default defineComponent({
     methods: {
         handleMoreUsers() {
             callRandomUSers()
-                .then((data: Array<User>) => {
-                    this.store.addUsers(data);
-                    this.store.setAllUsersLS(data)
+                .then((data: Array<Object>) => {
+                    const users: Array<User> = data.map((user) => {
+                        return { email: user.email, gender: user.gender, location: user.location, name: user.name, phone: user.phone, picture: user.picture, id: user.id }
+                    })
+                    this.store.addUsers(users);
+                    this.store.setAllUsersLS(users)
                     this.storedUsers = this.store.getAllUsers
-                    console.log(this.store.getAllUsers)
-                    console.log(this.storedUsers)
                     return this.storedUsers;
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
+                }).catch((error) => console.log(error))
         },
 
         handleFilteredUsers(filteredUsers: Array<User>) {
-            console.log(filteredUsers)
-            if (filteredUsers.length === 0) {
-                return [{
-                }]
+            if (filteredUsers.length === 0 || filteredUsers === 'undefined' || filteredUsers === undefined) {
+                return this.storedUsers
             }
             else {
-                console.log(this.store.getfilteredUsers)
                 this.store.setFilteredUsers(filteredUsers)
                 this.storedUsers = this.store.getfilteredUsers
-                console.log(this.storedUsers)
                 return this.storedUsers
             }
 
         },
         handleClick(user: User) {
             this.store.setUser(user)
-            console.log(this.store.user)
+            return this.$emit('userClicked', user)
         },
         handleScroll() {
-            console.log('handle scroll')
             const bottomOfWindow =
                 document.documentElement.scrollHeight -
                 document.documentElement.clientHeight;
@@ -60,16 +53,12 @@ export default defineComponent({
             if (this.scrollPosition >= bottomOfWindow) {
                 callRandomUSers()
                     .then((data: Array<Object>) => {
-                        console.log(data)
                         const users: Array<User> = data.map((user) => {
-                            return { email: user.email, gender: user.gender, location: user.location, name: user.name, phone: user.phone, picture: user.picture }
+                            return { email: user.email, gender: user.gender, location: user.location, name: user.name, phone: user.phone, picture: user.picture, id: user.id }
                         })
-                        console.log(users)
                         this.store.addUsers(users);
                         this.store.setAllUsersLS(users)
                         this.storedUsers = this.store.getAllUsers
-                        console.log(this.store.getAllUsers)
-                        console.log(this.storedUsers)
                         return this.storedUsers;
                     })
                     .catch((error) => {
@@ -81,16 +70,10 @@ export default defineComponent({
             try {
                 const allUsers = await this.store.getAllStoredUsers
                 const filteredUsers = await this.store.getfilteredUsers
-
-                console.log(allUsers)
-                console.log(filteredUsers)
-                let users: Array<User> = []
                 if (filteredUsers.length !== 0) {
-                    console.log('filteredUsers !== undefined')
                     this.storedUsers = filteredUsers
                 }
                 else {
-                    console.log('allUsers !== undefined')
                     this.storedUsers = allUsers
                 }
 
@@ -111,7 +94,6 @@ export default defineComponent({
     },
     computed: {
         finalUsers() {
-            console.log(this.storedUsers)
             return this.storedUsers;
         },
         scrollPosition() {

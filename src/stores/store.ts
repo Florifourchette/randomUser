@@ -45,7 +45,11 @@ export const useStore = defineStore({
       localStorage.setItem('filteredUsers', JSON.stringify(newUsers));
       const storedUsers = localStorage.getItem('filteredUsers');
 
-      if (storedUsers !== null && storedUsers !== undefined) {
+      if (
+        storedUsers !== null &&
+        storedUsers !== undefined &&
+        storedUsers !== 'undefined'
+      ) {
         this.filteredUsers = JSON.parse(storedUsers);
       }
       return this.filteredUsers;
@@ -54,7 +58,11 @@ export const useStore = defineStore({
       localStorage.setItem('genderFilter', JSON.stringify(newFilter));
       const storedFilter = localStorage.getItem('genderFilter');
 
-      if (storedFilter !== null && storedFilter !== undefined) {
+      if (
+        storedFilter !== null &&
+        storedFilter !== undefined &&
+        storedFilter !== 'undefined'
+      ) {
         this.genderFilter = JSON.parse(storedFilter);
       }
 
@@ -65,7 +73,11 @@ export const useStore = defineStore({
 
       const storedFilter = localStorage.getItem('searchFilter');
 
-      if (storedFilter !== null && storedFilter !== undefined) {
+      if (
+        storedFilter !== null &&
+        storedFilter !== undefined &&
+        storedFilter !== 'undefined'
+      ) {
         this.searchFilter = JSON.parse(storedFilter);
       }
 
@@ -74,7 +86,11 @@ export const useStore = defineStore({
     setUser(newUser: User) {
       localStorage.setItem('user', JSON.stringify(newUser));
       const storedUser = localStorage.getItem('user');
-      if (storedUser !== null && storedUser !== undefined) {
+      if (
+        storedUser !== null &&
+        storedUser !== undefined &&
+        storedUser !== 'undefined'
+      ) {
         this.user = JSON.parse(storedUser);
       }
       return this.user;
@@ -84,30 +100,23 @@ export const useStore = defineStore({
     getAllUsers(): Array<User> {
       let displayedUsers: Array<User> = [];
       const storedUsers = localStorage.getItem('allUsers');
-      if (storedUsers !== null) {
-        console.log('storedUsers !== null');
-        console.log(storedUsers);
+      if (
+        storedUsers !== null &&
+        storedUsers !== undefined &&
+        storedUsers !== 'undefined'
+      ) {
         displayedUsers = JSON.parse(storedUsers);
-        console.log(displayedUsers);
       } else {
-        console.log('storedUsers === null');
         displayedUsers = this.allUsers;
       }
 
       let storedFilteredUsers: string | null =
         localStorage.getItem('filteredUsers');
-      console.log(
-        'Value of storedFilteredUsers:',
-        storedFilteredUsers
-      );
       if (
         storedFilteredUsers !== null &&
         storedFilteredUsers !== undefined &&
         storedFilteredUsers !== 'undefined'
       ) {
-        console.log(
-          'storedFilteredUsers !== null && storedFilteredUsers !== undefined'
-        );
         this.allUsers = JSON.parse(storedFilteredUsers);
       } else {
         this.allUsers = displayedUsers;
@@ -116,7 +125,11 @@ export const useStore = defineStore({
     },
     getfilteredUsers(): Array<User> {
       const filteredUsersL = localStorage.getItem('filteredUsers');
-      if (filteredUsersL !== null && filteredUsersL !== undefined) {
+      if (
+        filteredUsersL !== null &&
+        filteredUsersL !== undefined &&
+        filteredUsersL !== 'undefined'
+      ) {
         this.filteredUsers = JSON.parse(filteredUsersL);
       }
       return this.filteredUsers;
@@ -129,9 +142,14 @@ export const useStore = defineStore({
     },
     getAllStoredUsers(): Array<User> {
       const allStoredUsers = localStorage.getItem('allUsers');
-
-      if (allStoredUsers !== null && allStoredUsers !== undefined) {
+      if (
+        allStoredUsers !== null &&
+        allStoredUsers !== undefined &&
+        allStoredUsers !== 'undefined'
+      ) {
         return JSON.parse(allStoredUsers);
+      } else {
+        return this.allUsers;
       }
     },
     getUser(): User {
@@ -139,7 +157,6 @@ export const useStore = defineStore({
       if (user !== null && user !== undefined) {
         this.user = JSON.parse(user);
       }
-      console.log(this.user);
       return this.user;
     },
   },

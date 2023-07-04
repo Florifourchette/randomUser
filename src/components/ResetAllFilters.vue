@@ -10,10 +10,31 @@ export default defineComponent({
             const emptyUser: User = {
                 email: '',
                 gender: '',
-                location: {},
-                name: '',
+                location: {
+                    street: {
+                        name: '',
+                        number: 0
+                    },
+                    country: '',
+                    postcode: 0,
+                    state: '',
+                    city: ''
+                },
+                name: {
+                    last: 'deleted',
+                    first: 'deleted',
+                    title: ''
+                },
                 phone: '',
-                picture: {},
+                picture: {
+                    large: '',
+                    medium: '',
+                    thumbnail: ''
+                },
+                id: {
+                    name: '',
+                    value: ''
+                }
             }
             const store = useStore()
             const allUsers = store.getAllStoredUsers
