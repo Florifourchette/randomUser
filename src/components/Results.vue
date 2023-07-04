@@ -83,28 +83,10 @@ export default defineComponent({
                     console.log('filteredUsers !== undefined')
                     this.storedUsers = filteredUsers
                 }
-                else
-                // if (allUsers !== undefined && allUsers !== null)
-                {
+                else {
                     console.log('allUsers !== undefined')
                     this.storedUsers = allUsers
                 }
-                // else {
-                //     console.log('API call')
-                //     callRandomUSers()
-                //         .then((data: Array<Object>) => {
-                //             this.store.addUsers(data);
-                //             this.store.setAllUsersLS(data)
-                //             return this.store.getAllUsers
-                //         }).then((data) => {
-                //             console.log(data)
-                //             return this.storedUsers = data
-                //         }
-                //         )
-                //         .catch((error) => {
-                //             console.log(error);
-                //         })
-                // }
 
                 return this.storedUsers
             } catch (error) {
@@ -131,12 +113,8 @@ export default defineComponent({
         }
     },
     mounted() {
-        // window.addEventListener('scroll', this.handleScroll);
         this.handleRefresh()
     },
-    // beforeUnmount() {
-    //     window.removeEventListener('scroll', this.handleScroll);
-    // },
 })
 
 </script>
