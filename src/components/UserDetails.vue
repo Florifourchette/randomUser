@@ -11,7 +11,7 @@ export default defineComponent({
     },
     computed: {
         displayedUser() {
-
+            this.user = this.store.getUser
             return this.user
         }
     },

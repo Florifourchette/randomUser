@@ -1,11 +1,13 @@
 <script lang="ts">
+import type { User } from '@/interface/UserInterface';
+
 import { useStore } from '@/stores/store';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
     methods: {
         handleEmptyLS() {
-            const emptyUser = {
+            const emptyUser: User = {
                 email: '',
                 gender: '',
                 location: {},

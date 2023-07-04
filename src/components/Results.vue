@@ -2,6 +2,7 @@
 import SearchBar from './SearchBar.vue';
 import FilterGender from './FilterGender.vue'
 import ResetAllFilters from './ResetAllFilters.vue';
+import type { User } from '../interface/UserInterface'
 
 import infiniteScroll from 'vue-infinite-scroll'
 
@@ -18,7 +19,7 @@ export default defineComponent({
     methods: {
         handleMoreUsers() {
             callRandomUSers()
-                .then((data: Array<Object>) => {
+                .then((data: Array<User>) => {
                     this.store.addUsers(data);
                     this.store.setAllUsersLS(data)
                     this.storedUsers = this.store.getAllUsers
@@ -31,7 +32,7 @@ export default defineComponent({
                 })
         },
 
-        handleFilteredUsers(filteredUsers: Array<Object>) {
+        handleFilteredUsers(filteredUsers: Array<User>) {
             console.log(filteredUsers)
             if (filteredUsers.length === 0) {
                 return [{
@@ -46,7 +47,7 @@ export default defineComponent({
             }
 
         },
-        handleClick(user: Object) {
+        handleClick(user: User) {
             this.store.setUser(user)
             console.log(this.store.user)
         },
@@ -59,8 +60,13 @@ export default defineComponent({
             if (this.scrollPosition >= bottomOfWindow) {
                 callRandomUSers()
                     .then((data: Array<Object>) => {
-                        this.store.addUsers(data);
-                        this.store.setAllUsersLS(data)
+                        console.log(data)
+                        const users: Array<User> = data.map((user) => {
+                            return { email: user.email, gender: user.gender, location: user.location, name: user.name, phone: user.phone, picture: user.picture }
+                        })
+                        console.log(users)
+                        this.store.addUsers(users);
+                        this.store.setAllUsersLS(users)
                         this.storedUsers = this.store.getAllUsers
                         console.log(this.store.getAllUsers)
                         console.log(this.storedUsers)
@@ -78,7 +84,7 @@ export default defineComponent({
 
                 console.log(allUsers)
                 console.log(filteredUsers)
-                let users: Array<Object> = []
+                let users: Array<User> = []
                 if (filteredUsers.length !== 0) {
                     console.log('filteredUsers !== undefined')
                     this.storedUsers = filteredUsers
@@ -97,7 +103,7 @@ export default defineComponent({
     },
     data() {
         const store = useStore();
-        let storedUsers: Array<Object> = store.getAllUsers;
+        let storedUsers: Array<User> = store.getAllUsers;
         return {
             storedUsers,
             store,
@@ -140,4 +146,4 @@ export default defineComponent({
         </div>
         <button @click.prevent="handleMoreUsers">More results...</button>
     </div>
-</template>
+</template>../interface/UserInterface

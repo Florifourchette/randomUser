@@ -1,13 +1,6 @@
-import { defineStore } from 'pinia';
+import type { User } from '../interface/UserInterface';
 
-interface User {
-  email: string;
-  gender: string;
-  location: Object;
-  name: string;
-  phone: string;
-  picture: Object;
-}
+import { defineStore } from 'pinia';
 
 interface RootState {
   allUsers: Array<User>;
@@ -103,9 +96,14 @@ export const useStore = defineStore({
 
       let storedFilteredUsers: string | null =
         localStorage.getItem('filteredUsers');
+      console.log(
+        'Value of storedFilteredUsers:',
+        storedFilteredUsers
+      );
       if (
         storedFilteredUsers !== null &&
-        storedFilteredUsers !== undefined
+        storedFilteredUsers !== undefined &&
+        storedFilteredUsers !== 'undefined'
       ) {
         console.log(
           'storedFilteredUsers !== null && storedFilteredUsers !== undefined'
@@ -141,6 +139,7 @@ export const useStore = defineStore({
       if (user !== null && user !== undefined) {
         this.user = JSON.parse(user);
       }
+      console.log(this.user);
       return this.user;
     },
   },
