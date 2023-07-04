@@ -6,13 +6,13 @@ import { defineComponent } from 'vue';
 export default defineComponent({
     data() {
         const store = useStore()
-
-        return { store }
+        const user = store.getUser
+        return { store, user }
     },
     computed: {
         displayedUser() {
-            const user = this.store.getUser
-            return user
+            this.user = this.store.getUser
+            return this.user
         }
     },
 })

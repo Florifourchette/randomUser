@@ -1,18 +1,26 @@
 <script lang="ts">
+import type { User } from '@/interface/UserInterface';
+
 import { useStore } from '@/stores/store';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
     methods: {
         handleEmptyLS() {
-            console.log('button clicked')
+            const emptyUser: User = {
+                email: '',
+                gender: '',
+                location: {},
+                name: '',
+                phone: '',
+                picture: {},
+            }
             const store = useStore()
             const allUsers = store.getAllStoredUsers
-            console.log(allUsers)
             store.setGenderFilter('3')
             store.setSearchFilter('')
             store.setFilteredUsers(allUsers)
-            console.log(store.getfilteredUsers)
+            store.setUser(emptyUser)
             return this.$emit('filtersReset', allUsers)
         }
     }
