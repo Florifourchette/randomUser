@@ -6,7 +6,7 @@ export default {
     components: {
         Results,
         UserDetails
-    }
+    },
 }
 
 </script>
