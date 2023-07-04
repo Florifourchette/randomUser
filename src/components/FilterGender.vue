@@ -33,7 +33,7 @@ export default {
                 value: 2,
             },
             {
-                text: 'Reset filters',
+                text: 'Reset gender filter',
                 value: 3,
             },
         ]

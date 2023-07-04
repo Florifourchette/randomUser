@@ -16,9 +16,20 @@ export default {
         }
     },
     data() {
+        const store = useStore()
         const searchTerm: String = ''
-        return { searchTerm }
+        return { searchTerm, store }
     },
+    mounted() {
+        console.log(this.store)
+        const storedFilter = this.store.getSearchFilter
+        if (storedFilter !== null && storedFilter !== undefined) { this.searchTerm = this.store.getSearchFilter }
+    },
+    watch: {
+        searchTerm(searchTerm) {
+            this.store.setSearchFilter(searchTerm)
+        },
+    }
 
 };
 </script>
