@@ -112,24 +112,35 @@ export const useStore = defineStore({
       let displayedUsers: Array<Object> = [];
       const storedUsers = localStorage.getItem('allUsers');
       if (storedUsers !== null) {
+        console.log('storedUsers !== null');
+        console.log(storedUsers);
         displayedUsers = JSON.parse(storedUsers);
+        console.log(displayedUsers);
       } else {
+        console.log('storedUsers === null');
         displayedUsers = this.allUsers;
       }
+
       let storedFilteredUsers: string | null =
         localStorage.getItem('filteredUsers');
       if (
         storedFilteredUsers !== null &&
         storedFilteredUsers !== undefined
       ) {
+        console.log(
+          'storedFilteredUsers !== null && storedFilteredUsers !== undefined'
+        );
         this.allUsers = JSON.parse(storedFilteredUsers);
+      } else {
+        this.allUsers = displayedUsers;
       }
-
-      console.log(storedFilteredUsers);
-      console.log(this.allUsers);
       return this.allUsers;
     },
     getfilteredUsers(): Array<Object> {
+      const filteredUsersL = localStorage.getItem('filteredUsers');
+      if (filteredUsersL !== null && filteredUsersL !== undefined) {
+        this.filteredUsers = JSON.parse(filteredUsersL);
+      }
       return this.filteredUsers;
     },
     getGenderFilter(): String {

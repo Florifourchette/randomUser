@@ -36,6 +36,7 @@ export default defineComponent({
             console.log(this.store.user)
         },
         handleScroll() {
+            console.log('handle scroll')
             const bottomOfWindow =
                 document.documentElement.scrollHeight -
                 document.documentElement.clientHeight;
@@ -46,6 +47,7 @@ export default defineComponent({
                         this.store.addUsers(data);
                         this.store.setAllUsersLS(data)
                         this.storedUsers = this.store.getAllUsers
+                        console.log(this.store.getAllUsers)
                         console.log(this.storedUsers)
                         return this.storedUsers;
                     })
@@ -54,6 +56,46 @@ export default defineComponent({
                     });
             }
         },
+        async handleRefresh() {
+            try {
+                const allUsers = await this.store.getAllStoredUsers
+                const filteredUsers = await this.store.getfilteredUsers
+
+                console.log(allUsers)
+                console.log(filteredUsers)
+                let users: Array<Object> = []
+                if (filteredUsers.length !== 0) {
+                    console.log('filteredUsers !== undefined')
+                    this.storedUsers = filteredUsers
+                }
+                else
+                // if (allUsers !== undefined && allUsers !== null)
+                {
+                    console.log('allUsers !== undefined')
+                    this.storedUsers = allUsers
+                }
+                // else {
+                //     console.log('API call')
+                //     callRandomUSers()
+                //         .then((data: Array<Object>) => {
+                //             this.store.addUsers(data);
+                //             this.store.setAllUsersLS(data)
+                //             return this.store.getAllUsers
+                //         }).then((data) => {
+                //             console.log(data)
+                //             return this.storedUsers = data
+                //         }
+                //         )
+                //         .catch((error) => {
+                //             console.log(error);
+                //         })
+                // }
+
+                return this.storedUsers
+            } catch (error) {
+                console.log(error)
+            }
+        }
 
     },
     data() {
@@ -61,43 +103,47 @@ export default defineComponent({
         let storedUsers: Array<Object> = store.getAllUsers;
         return {
             storedUsers,
-            store
+            store,
         };
     },
     computed: {
         finalUsers() {
+            console.log(this.storedUsers)
             return this.storedUsers;
         },
         scrollPosition() {
-            return window.pageYOffset || document.documentElement.scrollTop;
+            return document.documentElement.scrollTop;
         }
     },
     mounted() {
-        window.addEventListener('scroll', this.handleScroll);
+        // window.addEventListener('scroll', this.handleScroll);
+        this.handleRefresh()
     },
-    beforeUnmount() {
-        window.removeEventListener('scroll', this.handleScroll);
-    },
+    // beforeUnmount() {
+    //     window.removeEventListener('scroll', this.handleScroll);
+    // },
 })
 
 </script>
 <template>
-    <div class="infinite-scroll" v-infinite-scroll="handleScroll">
+    <div>
         <SearchBar :users="finalUsers" @newUsersArray="handleFilteredUsers" />
         <FilterGender :users="finalUsers" @newUsersArray="handleFilteredUsers" />
         <ResetAllFilters @filtersReset="handleFilteredUsers" />
-        <div v-for="( user, index ) in   finalUsers  " :key="index">
-            <sui-card @click="handleClick(user)">
-                <sui-reveal animated="move">
-                    <sui-reveal-content visible>
-                        <sui-image :src="`${user.picture?.thumbnail}`" />
-                    </sui-reveal-content>
-                </sui-reveal>
-                <sui-card-content>
-                    <sui-card-header>{{ user.name?.last }} {{ user.name?.first }}</sui-card-header>
-                    <sui-card-meta>{{ user?.email }}</sui-card-meta>
-                </sui-card-content>
-            </sui-card>
+        <div id="infinite-list" class="infinite-scroll" v-infinite-scroll="handleScroll">
+            <div v-for="( user, index ) in   finalUsers  " :key="index">
+                <sui-card @click="handleClick(user)">
+                    <sui-reveal animated="move">
+                        <sui-reveal-content visible>
+                            <sui-image :src="`${user.picture?.thumbnail}`" />
+                        </sui-reveal-content>
+                    </sui-reveal>
+                    <sui-card-content>
+                        <sui-card-header>{{ user.name?.last }} {{ user.name?.first }}</sui-card-header>
+                        <sui-card-meta>{{ user?.email }}</sui-card-meta>
+                    </sui-card-content>
+                </sui-card>
+            </div>
         </div>
         <button @click.prevent="handleMoreUsers">More results...</button>
     </div>

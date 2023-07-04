@@ -14,5 +14,6 @@ main {
 
 .infinite-scroll {
   overflow-y: auto;
-  height: 100vh;
+  height: 85vh;
+  border: solid red;
 }
