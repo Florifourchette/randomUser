@@ -4,6 +4,7 @@ interface RootState {
   allUsers: Array<Object>;
   filteredUsers: Array<Object>;
   genderFilter: String;
+  searchFilter: String;
   user: Object;
   // {
   //   first: String;
@@ -32,6 +33,7 @@ export const useStore = defineStore({
     user: {},
     filteredUsers: [],
     genderFilter: '',
+    searchFilter: '',
     // {
     //   first: '',
     //   last: '',
@@ -52,18 +54,9 @@ export const useStore = defineStore({
     // },
   }),
   actions: {
-    // setAllUsers(newUsers: Array<Object>) {
-    //   this.allUsers = newUsers;
-    //   console.log(this.allUsers);
-    //   return this.allUsers;
-    // },
     addUsers(newUsers: Array<Object>) {
       this.allUsers = this.allUsers.concat(newUsers);
       return this.allUsers;
-    },
-    setUser(newUser: Object) {
-      this.user = newUser;
-      return newUser;
     },
 
     setAllUsersLS(newUsers: Array<Object>) {
@@ -82,7 +75,6 @@ export const useStore = defineStore({
       if (storedUsers !== null && storedUsers !== undefined) {
         this.filteredUsers = JSON.parse(storedUsers);
       }
-
       return this.filteredUsers;
     },
     setGenderFilter(newFilter: String) {
@@ -95,6 +87,25 @@ export const useStore = defineStore({
 
       return this.filteredUsers;
     },
+    setSearchFilter(newSearch: String) {
+      localStorage.setItem('searchFilter', JSON.stringify(newSearch));
+
+      const storedFilter = localStorage.getItem('searchFilter');
+
+      if (storedFilter !== null && storedFilter !== undefined) {
+        this.searchFilter = JSON.parse(storedFilter);
+      }
+
+      return this.filteredUsers;
+    },
+    setUser(newUser: Object) {
+      localStorage.setItem('user', JSON.stringify(newUser));
+      const storedUser = localStorage.getItem('user');
+      if (storedUser !== null && storedUser !== undefined) {
+        this.user = JSON.parse(storedUser);
+      }
+      return this.user;
+    },
   },
   getters: {
     getAllUsers(): Array<Object> {
@@ -105,31 +116,16 @@ export const useStore = defineStore({
       } else {
         displayedUsers = this.allUsers;
       }
-
-      console.log(displayedUsers);
-      console.log(localStorage.genderFilter);
-
-      const genderFilter = parseInt(localStorage.genderFilter, 10);
-      let filteredUsers: Array<Object> = [];
-      console.log(
-        localStorage.getItem('genderFilter') === null ||
-          localStorage.getItem('genderFilter') === undefined
-          ? 'not working'
-          : 'all good'
-      );
-      if (localStorage.genderFilter === '1') {
-        filteredUsers = displayedUsers.filter((user) => {
-          return user.gender === 'male';
-        });
-      } else if (localStorage.genderFilter === '2') {
-        filteredUsers = displayedUsers.filter(
-          (user) => user.gender === 'female'
-        );
-      } else {
-        filteredUsers = displayedUsers;
+      let storedFilteredUsers: string | null =
+        localStorage.getItem('filteredUsers');
+      if (
+        storedFilteredUsers !== null &&
+        storedFilteredUsers !== undefined
+      ) {
+        this.allUsers = JSON.parse(storedFilteredUsers);
       }
-      console.log(filteredUsers);
-      this.allUsers = filteredUsers;
+
+      console.log(storedFilteredUsers);
       console.log(this.allUsers);
       return this.allUsers;
     },
@@ -139,7 +135,21 @@ export const useStore = defineStore({
     getGenderFilter(): String {
       return this.genderFilter;
     },
+    getSearchFilter(): String {
+      return this.searchFilter;
+    },
+    getAllStoredUsers(): Array<Object> {
+      const allStoredUsers = localStorage.getItem('allUsers');
+
+      if (allStoredUsers !== null && allStoredUsers !== undefined) {
+        return JSON.parse(allStoredUsers);
+      }
+    },
     getUser(): Object {
+      const user = localStorage.getItem('user');
+      if (user !== null && user !== undefined) {
+        this.user = JSON.parse(user);
+      }
       return this.user;
     },
   },

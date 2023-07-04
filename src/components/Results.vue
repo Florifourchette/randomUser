@@ -1,6 +1,8 @@
 <script lang="ts">
 import SearchBar from './SearchBar.vue';
 import FilterGender from './FilterGender.vue'
+import ResetAllFilters from './ResetAllFilters.vue';
+
 import infiniteScroll from 'vue-infinite-scroll'
 
 import { callRandomUSers } from '../utils/Apicall'
@@ -9,28 +11,11 @@ import { useStore } from '@/stores/store';
 
 
 export default defineComponent({
-    components: { SearchBar, FilterGender },
+    components: { SearchBar, FilterGender, ResetAllFilters },
     directives: {
         infiniteScroll: infiniteScroll,
     },
     methods: {
-        // handleUsers(): Array<Object> {
-        //     return callRandomUSers().then((data: Array<Object>) => {
-        //         this.store.setAllUsers(data);
-        //         this.storedUsers = this.store.getAllUsers;
-        //         return this.storedUsers;
-        //     }).catch((error) => { console.log(error); return []; });
-        // },
-        // handleMoreUsers(): Promise<Array<Object>> {
-        //     return callRandomUSers().then((data: Array<Object>) => {
-        //         console.log('handlemoreuser reached')
-        //         this.store.addUsers(data);
-        //         this.store.setAllUsersLS(data);
-        //         console.log(this.store)
-        //         this.storedUsers = this.store.getAllUsers;
-        //         return this.storedUsers;
-        //     }).catch((error) => { console.log(error); return []; });
-        // },
         handleFilteredUsers(filteredUsers: Array<Object>) {
             console.log(filteredUsers)
             if (filteredUsers.length === 0) {
@@ -47,12 +32,10 @@ export default defineComponent({
 
         },
         handleClick(user: Object) {
-
             this.store.setUser(user)
             console.log(this.store.user)
         },
         handleScroll() {
-            console.log('handle scroll')
             const bottomOfWindow =
                 document.documentElement.scrollHeight -
                 document.documentElement.clientHeight;
@@ -102,7 +85,7 @@ export default defineComponent({
     <div class="infinite-scroll" v-infinite-scroll="handleScroll">
         <SearchBar :users="finalUsers" @newUsersArray="handleFilteredUsers" />
         <FilterGender :users="finalUsers" @newUsersArray="handleFilteredUsers" />
-        <!-- <button @click.prevent="handleUsers">Test API Call</button> -->
+        <ResetAllFilters @filtersReset="handleFilteredUsers" />
         <div v-for="( user, index ) in   finalUsers  " :key="index">
             <sui-card @click="handleClick(user)">
                 <sui-reveal animated="move">
