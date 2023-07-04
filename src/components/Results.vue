@@ -16,6 +16,21 @@ export default defineComponent({
         infiniteScroll: infiniteScroll,
     },
     methods: {
+        handleMoreUsers() {
+            callRandomUSers()
+                .then((data: Array<Object>) => {
+                    this.store.addUsers(data);
+                    this.store.setAllUsersLS(data)
+                    this.storedUsers = this.store.getAllUsers
+                    console.log(this.store.getAllUsers)
+                    console.log(this.storedUsers)
+                    return this.storedUsers;
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+        },
+
         handleFilteredUsers(filteredUsers: Array<Object>) {
             console.log(filteredUsers)
             if (filteredUsers.length === 0) {
