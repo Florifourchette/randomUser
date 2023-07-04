@@ -9,11 +9,9 @@ main {
 
 .filtersContainer select {
   margin: 1em;
-  border: red solid;
 }
 
 .infinite-scroll {
   overflow-y: auto;
   height: 85vh;
-  border: solid red;
 }
