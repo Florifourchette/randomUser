@@ -12,7 +12,7 @@ export default {
             else {
                 filteredUsers = storedUsers
             }
-            return this.$emit('newUsersArray', filteredUsers)
+            this.$emit('newUsersArray', filteredUsers)
         }
     },
     data() {
