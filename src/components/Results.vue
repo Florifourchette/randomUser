@@ -19,7 +19,7 @@ export default defineComponent({
     methods: {
         handleMoreUsers() {
             callRandomUSers()
-                .then((data: Array<User>) => {
+                .then((data: Array<Object>) => {
                     const users: Array<User> = data.map((user) => {
                         return { email: user.email, gender: user.gender, location: user.location, name: user.name, phone: user.phone, picture: user.picture, id: user.id }
                     })
@@ -46,14 +46,13 @@ export default defineComponent({
             return this.$emit('userClicked', user)
         },
         handleScroll() {
-            console.log('handleScroll')
             const bottomOfWindow =
                 document.documentElement.scrollHeight -
                 document.documentElement.clientHeight;
 
             if (this.scrollPosition >= bottomOfWindow) {
                 callRandomUSers()
-                    .then((data: Array<User>) => {
+                    .then((data: Array<Object>) => {
                         const users: Array<User> = data.map((user) => {
                             return { email: user.email, gender: user.gender, location: user.location, name: user.name, phone: user.phone, picture: user.picture, id: user.id }
                         })
@@ -68,11 +67,9 @@ export default defineComponent({
             }
         },
         async handleRefresh() {
-            console.log('handleRefresh')
             try {
                 const allUsers = await this.store.getAllStoredUsers
                 const filteredUsers = await this.store.getfilteredUsers
-                console.log(filteredUsers)
                 if (filteredUsers.length !== 0) {
                     this.storedUsers = filteredUsers
                 }
@@ -130,4 +127,4 @@ export default defineComponent({
         </div>
         <button @click.prevent="handleMoreUsers">More results...</button>
     </div>
-</template>../interface/UserInterface
+</template>
