@@ -57,11 +57,9 @@ export default {
 
 <template>
     <div class="genderFilter">
-        <div>
-            <b-form-group label="Search per gender:" label-cols-lg="2">
-                <b-form-select id="table-style-variant" v-model="current" :options="options" @input="handleChange">
-                </b-form-select>
-            </b-form-group>
-        </div>
+        <b-form-group class="label" label="Search per gender:" label-cols-lg="2">
+            <b-form-select class="dropdown" v-model="current" :options="options" @input="handleChange">
+            </b-form-select>
+        </b-form-group>
     </div>
 </template>

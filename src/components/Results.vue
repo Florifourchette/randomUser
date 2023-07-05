@@ -113,10 +113,10 @@ export default defineComponent({
         <ResetAllFilters @filtersReset="handleFilteredUsers" />
         <div id="infinite-list" class="infinite-scroll" v-infinite-scroll="handleScroll">
             <div v-for="( user, index ) in   finalUsers  " :key="index">
-                <div class="card">
+                <div class="card" @click="handleClick(user)">
                     <img class="card-img-left" :src="`${user.picture?.thumbnail}`" alt="displayedUser.name.last">
                     <div class="card-body">
-                        <h5 class="card-title">{{ user.name?.last }} {{ user.name?.first }}</h5>
+                        <h6 class="card-title">{{ user.name?.last }} {{ user.name?.first }}</h6>
                     </div>
                     <div class="card-body">
                         <p>{{ user?.email }}</p>

@@ -11,53 +11,41 @@
   }
 
   .userDetailsDisplayed {
-    font-size: 0.8em;
+    font-size: 0.9em;
     margin: 1em;
   }
 
-  .userDetailsDisplayed .ui.card {
-    width: 100%;
+  .userDetailsDisplayed .card {
+    width: 90%;
+    min-width: 22em;
+    max-width: 45em;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin: auto;
   }
 
-  .userDetailsDisplayed .ui.card .content img {
+  .userDetailsDisplayed .card-img-top {
     width: auto;
     height: 40%;
     margin: 0.5em;
   }
 
-  .userDetailsDisplayed .ui.reveal > .visible.content {
+  .userDetailsDisplayed .card-header {
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  .userDetailsDisplayed .ui.card > .content {
+  .userDetailsDisplayed .card-body {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    align-items: baseline;
-    padding: 0;
+    margin: 0.5em;
   }
 
-  .userDetailsDisplayed .ui.card > .content > .header {
-    font-size: 1.8em;
-    margin: 0.5em 0 0.5em 0;
-  }
-
-  .userDetailsDisplayed .ui.card > .content > .description {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: wrap;
+  .userDetailsDisplayed .descriptionItem {
     width: 100%;
-    margin: 0 0 0.5em 0;
-  }
-
-  .descriptionItem {
-    width: 40%;
   }
 
   /* All styles concerning the Results containers */
@@ -66,32 +54,115 @@
     flex-direction: column;
     align-items: center;
     margin-top: 0;
-    margin-left: 1em;
-    margin-right: 1em;
+    margin-left: auto;
+    margin-right: auto;
     height: 80vh;
+    width: 90%;
+    min-width: 22em;
+    max-width: 45em;
+  }
+  .infinite-scroll {
+    width: 100%;
+    min-width: 22em;
+    height: 85%;
   }
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 500px) {
   .userDetailsDisplayed .ui.card > .content > .header {
     font-size: 1.3em;
     margin: 0.5em 0 0.5em 0;
   }
 
-  .userDetailsDisplayed .ui.card > .content > .description {
+  .userDetailsDisplayed .card {
     display: flex;
     flex-direction: column;
   }
 
-  .descriptionItem {
+  .userDetailsDisplayed .card-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0;
+  }
+
+  .userDetailsDisplayed .descriptionItem {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     width: 100%;
-    margin: 0.5em;
+    min-width: 10em;
+    max-width: 15em;
   }
 
   .userDetailsDisplayed h3 {
     font-size: 1.2em;
+  }
+}
+
+@media only screen and (max-width: 380px) {
+  main {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    align-items: center;
+    max-width: 20em;
+  }
+  .resultContainer {
+    width: 93%;
+    min-width: 5em;
+    max-width: 25em;
+    margin: 0;
+    padding: 0;
+  }
+
+  .resultContainer .infinite-scroll {
+    width: 100%;
+    min-width: 5em;
+    max-width: 30em;
+    height: 80%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .resultContainer .card-body p {
+    font-size: 0.8em;
+  }
+  .resultContainer .card-body {
+    margin: 0;
+    padding: 3px;
+  }
+
+  .resultContainer .card-img-left {
+    margin: 0;
+  }
+
+  .userDetailsDisplayed .card {
+    display: flex;
+    width: 90%;
+    min-width: 20em;
+    max-width: 30em;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .userDetailsDisplayed .card-header {
+    width: 50%;
+    text-align: center;
+    align-self: center;
+  }
+
+  .userDetailsDisplayed .card-body {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .userDetailsDisplayed .card-img-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
   }
 }

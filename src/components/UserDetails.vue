@@ -32,7 +32,7 @@ export default defineComponent({
     <div :class="userDetailsClass">
         <div class="card">
             <img class="card-img-top" :src="`${displayedUser.picture?.large}`" alt="displayedUser.name.last">
-            <div class="card-body">
+            <div class="card-header">
                 <h5 class="card-title">{{ displayedUser.name?.last }} {{ displayedUser.name?.first }}</h5>
                 <p>{{ displayedUser?.id?.value === null ? 'No ID found' : `${displayedUser.id?.name} :
                                     ${displayedUser?.id?.value}` }}</p>
