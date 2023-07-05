@@ -113,17 +113,16 @@ export default defineComponent({
         <ResetAllFilters @filtersReset="handleFilteredUsers" />
         <div id="infinite-list" class="infinite-scroll" v-infinite-scroll="handleScroll">
             <div v-for="( user, index ) in   finalUsers  " :key="index">
-                <sui-card @click="handleClick(user)">
-                    <sui-reveal animated="move">
-                        <sui-reveal-content visible>
-                            <sui-image :src="`${user.picture?.thumbnail}`" />
-                        </sui-reveal-content>
-                    </sui-reveal>
-                    <sui-card-content>
-                        <sui-card-header>{{ user.name?.last }} {{ user.name?.first }}</sui-card-header>
-                        <sui-card-meta>{{ user?.email }}</sui-card-meta>
-                    </sui-card-content>
-                </sui-card>
+                <div class="card">
+                    <img class="card-img-left" :src="`${user.picture?.thumbnail}`" alt="displayedUser.name.last">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ user.name?.last }} {{ user.name?.first }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>{{ user?.email }}</p>
+                    </div>
+                </div>
+
             </div>
         </div>
         <button @click.prevent="handleMoreUsers">More results...</button>
