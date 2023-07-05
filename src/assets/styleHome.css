@@ -21,3 +21,7 @@ button:hover {
   background-color: aliceblue;
   border: 2px rgb(49, 49, 108) solid;
 }
+
+h5 {
+  font-size: 2em;
+}

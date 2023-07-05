@@ -11,22 +11,23 @@
   height: 85%;
 }
 
-.resultContainer .ui.card {
+.resultContainer .card {
   display: flex;
   flex-direction: row;
   margin: 1em 0.5em 1em 0.5em;
   cursor: pointer;
 }
 
-.resultContainer .ui.card:hover {
+.resultContainer .card:hover {
   background-color: aliceblue;
 }
 
-.resultContainer .ui.card .content img {
-  width: 90%;
+.resultContainer .card-img-left {
+  width: 4em;
   margin: 0.5em;
 }
 
-.descriptionItem {
-  margin-top: 1em;
+.resultContainer .card-body {
+  display: flex;
+  flex-direction: column;
 }
