@@ -1,3 +1,4 @@
+import { emptyUser } from '@/interface/emptyUser';
 import type { User } from '../interface/UserInterface';
 
 import { defineStore } from 'pinia';
@@ -98,6 +99,7 @@ export const useStore = defineStore({
   },
   getters: {
     getAllUsers(): Array<User> {
+      console.log('get AllUsers started');
       let displayedUsers: Array<User> = [];
       const storedUsers = localStorage.getItem('allUsers');
       if (
@@ -110,17 +112,29 @@ export const useStore = defineStore({
         displayedUsers = this.allUsers;
       }
 
+      console.log(displayedUsers);
+
+      localStorage.setItem('this.filteredUsers', '');
+
       let storedFilteredUsers: string | null =
         localStorage.getItem('filteredUsers');
+      console.log(storedFilteredUsers);
+
       if (
         storedFilteredUsers !== null &&
         storedFilteredUsers !== undefined &&
-        storedFilteredUsers !== 'undefined'
+        storedFilteredUsers !== ''
       ) {
+        console.log(
+          "storedFilteredUsers !== null && storedFilteredUsers !== undefined &&storedFilteredUsers !== 'undefined'"
+        );
         this.allUsers = JSON.parse(storedFilteredUsers);
       } else {
+        console.log('else');
         this.allUsers = displayedUsers;
       }
+
+      this.allUsers = displayedUsers;
       return this.allUsers;
     },
     getfilteredUsers(): Array<User> {
@@ -156,6 +170,8 @@ export const useStore = defineStore({
       const user = localStorage.getItem('user');
       if (user !== null && user !== undefined) {
         this.user = JSON.parse(user);
+      } else {
+        this.user = emptyUser;
       }
       return this.user;
     },

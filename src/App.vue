@@ -13,7 +13,7 @@ export default {
 
 <template>
   <main>
-    <UserDetails />
     <Results />
+    <UserDetails />
   </main>
 </template>

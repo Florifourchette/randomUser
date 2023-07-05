@@ -31,7 +31,7 @@ export default defineComponent({
         },
 
         handleFilteredUsers(filteredUsers: Array<User>) {
-            if (filteredUsers.length === 0 || filteredUsers === 'undefined' || filteredUsers === undefined) {
+            if (filteredUsers.length === 0 || filteredUsers === undefined) {
                 return this.storedUsers
             }
             else {
