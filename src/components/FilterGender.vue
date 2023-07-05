@@ -4,6 +4,7 @@ import { useStore } from '@/stores/store';
 export default {
     methods: {
         handleChange(): void {
+            console.log(this.current)
             const store = useStore()
             const storedUsers = store.getAllUsers
             let filteredUsers: Array<Object> = []
@@ -23,7 +24,7 @@ export default {
     data() {
         const current: Number = 3
         const store = useStore()
-        const options: Array<Object> = [
+        const options: Array<{ text: String, value: Number }> = [
             {
                 text: 'Male',
                 value: 1,
@@ -56,18 +57,11 @@ export default {
 
 <template>
     <div class="genderFilter">
-        <sui-dropdown placeholder="Search for gender" selection :options="options" v-model="current"
-            @input="handleChange" />
-
         <div>
-            <b-dropdown id="dropdown-1" text="Dropdown Button" class="m-md-2">
-                <b-dropdown-item>First Action</b-dropdown-item>
-                <b-dropdown-item>Second Action</b-dropdown-item>
-                <b-dropdown-item>Third Action</b-dropdown-item>
-                <b-dropdown-divider></b-dropdown-divider>
-                <b-dropdown-item active>Active action</b-dropdown-item>
-                <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-            </b-dropdown>
+            <b-form-group label="Search per gender:" label-cols-lg="2">
+                <b-form-select id="table-style-variant" v-model="current" :options="options" @input="handleChange">
+                </b-form-select>
+            </b-form-group>
         </div>
     </div>
 </template>
