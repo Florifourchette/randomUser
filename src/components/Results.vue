@@ -19,7 +19,7 @@ export default defineComponent({
     methods: {
         handleMoreUsers() {
             callRandomUSers()
-                .then((data: Array<Object>) => {
+                .then((data: Array<User>) => {
                     const users: Array<User> = data.map((user) => {
                         return { email: user.email, gender: user.gender, location: user.location, name: user.name, phone: user.phone, picture: user.picture, id: user.id }
                     })
@@ -52,7 +52,7 @@ export default defineComponent({
 
             if (this.scrollPosition >= bottomOfWindow) {
                 callRandomUSers()
-                    .then((data: Array<Object>) => {
+                    .then((data: Array<User>) => {
                         const users: Array<User> = data.map((user) => {
                             return { email: user.email, gender: user.gender, location: user.location, name: user.name, phone: user.phone, picture: user.picture, id: user.id }
                         })

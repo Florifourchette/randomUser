@@ -1,6 +1,7 @@
 <script lang="ts">
 import { useStore } from '@/stores/store';
 
+
 export default {
     methods: {
         handleInput(): void {
@@ -17,12 +18,12 @@ export default {
     },
     data() {
         const store = useStore()
-        const searchTerm: String = ''
+        const searchTerm = ''
         return { searchTerm, store }
     },
     mounted() {
         const storedFilter = this.store.getSearchFilter
-        if (storedFilter !== null && storedFilter !== undefined) { this.searchTerm = this.store.getSearchFilter }
+        if (storedFilter !== null && storedFilter !== undefined) { this.searchTerm = String(this.store.getSearchFilter) }
     },
     watch: {
         searchTerm(searchTerm) {
@@ -38,3 +39,5 @@ export default {
         <input type="text" placeholder="Search..." v-model="searchTerm" @input="handleInput">
     </div>
 </template>
+
+@Component
