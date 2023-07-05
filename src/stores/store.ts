@@ -15,14 +15,7 @@ export const useStore = defineStore({
   id: 'counter',
   state: (): RootState => ({
     allUsers: [],
-    user: {
-      email: '',
-      gender: '',
-      location: {},
-      name: '',
-      phone: '',
-      picture: {},
-    },
+    user: emptyUser,
     filteredUsers: [],
     genderFilter: '',
     searchFilter: '',
