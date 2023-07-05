@@ -39,5 +39,3 @@ export default {
         <input type="text" placeholder="Search..." v-model="searchTerm" @input="handleInput">
     </div>
 </template>
-
-@Component
