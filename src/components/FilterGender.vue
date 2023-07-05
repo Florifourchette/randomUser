@@ -21,7 +21,7 @@ export default {
         }
     },
     data() {
-        const current: number = 3
+        const current: Number = 3
         const store = useStore()
         const options: Array<Object> = [
             {
@@ -58,7 +58,16 @@ export default {
     <div class="genderFilter">
         <sui-dropdown placeholder="Search for gender" selection :options="options" v-model="current"
             @input="handleChange" />
+
+        <div>
+            <b-dropdown id="dropdown-1" text="Dropdown Button" class="m-md-2">
+                <b-dropdown-item>First Action</b-dropdown-item>
+                <b-dropdown-item>Second Action</b-dropdown-item>
+                <b-dropdown-item>Third Action</b-dropdown-item>
+                <b-dropdown-divider></b-dropdown-divider>
+                <b-dropdown-item active>Active action</b-dropdown-item>
+                <b-dropdown-item disabled>Disabled action</b-dropdown-item>
+            </b-dropdown>
+        </div>
     </div>
 </template>
-
-@Component
