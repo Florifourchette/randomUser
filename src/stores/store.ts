@@ -107,8 +107,6 @@ export const useStore = defineStore({
 
       console.log(displayedUsers);
 
-      localStorage.setItem('this.filteredUsers', '');
-
       let storedFilteredUsers: string | null =
         localStorage.getItem('filteredUsers');
       console.log(storedFilteredUsers);
