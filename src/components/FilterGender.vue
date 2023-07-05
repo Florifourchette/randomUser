@@ -4,7 +4,6 @@ import { useStore } from '@/stores/store';
 export default {
     methods: {
         handleChange(): void {
-            console.log(this.current)
             const store = useStore()
             const storedUsers = store.getAllUsers
             let filteredUsers: Array<Object> = []
@@ -18,13 +17,13 @@ export default {
                 filteredUsers = storedUsers
             }
 
-            this.$emit('newUsersArray', filteredUsers)
+            return this.$emit('newUsersArray', filteredUsers)
         }
     },
     data() {
-        const current: Number = 3
+        const current: number = 3
         const store = useStore()
-        const options: Array<{ text: String, value: Number }> = [
+        const options: Array<Object> = [
             {
                 text: 'Male',
                 value: 1,
@@ -43,8 +42,10 @@ export default {
         };
     },
     mounted() {
+
         const storedFilter = this.store.getGenderFilter
-        if (storedFilter !== null && storedFilter !== undefined) { this.current = parseInt(this.store.getGenderFilter.toString()) }
+
+        if (storedFilter !== null && storedFilter !== undefined) { return this.current = parseInt(this.store.getGenderFilter.toString()) }
     },
     watch: {
         current(current) {

@@ -51,7 +51,6 @@ export const useStore = defineStore({
     setGenderFilter(newFilter: String) {
       localStorage.setItem('genderFilter', JSON.stringify(newFilter));
       const storedFilter = localStorage.getItem('genderFilter');
-
       if (
         storedFilter !== null &&
         storedFilter !== undefined &&
@@ -109,7 +108,6 @@ export const useStore = defineStore({
 
       let storedFilteredUsers: string | null =
         localStorage.getItem('filteredUsers');
-      console.log(storedFilteredUsers);
 
       if (
         storedFilteredUsers !== null &&
@@ -140,10 +138,28 @@ export const useStore = defineStore({
       return this.filteredUsers;
     },
     getGenderFilter(): String {
-      return this.genderFilter;
+      const genderFilter = localStorage.getItem('genderFilter');
+      if (
+        genderFilter !== null &&
+        genderFilter !== undefined &&
+        genderFilter !== ''
+      ) {
+        return JSON.parse(genderFilter);
+      } else {
+        return this.genderFilter;
+      }
     },
     getSearchFilter(): String {
-      return this.searchFilter;
+      const searchFilter = localStorage.getItem('searchFilter');
+      if (
+        searchFilter !== null &&
+        searchFilter !== undefined &&
+        searchFilter !== ''
+      ) {
+        return JSON.parse(searchFilter);
+      } else {
+        return this.searchFilter;
+      }
     },
     getAllStoredUsers(): Array<User> {
       const allStoredUsers = localStorage.getItem('allUsers');
