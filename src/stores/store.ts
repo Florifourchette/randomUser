@@ -111,7 +111,6 @@ export const useStore = defineStore({
 
       let storedFilteredUsers: string | null =
         localStorage.getItem('filteredUsers');
-      console.log(storedFilteredUsers);
 
       if (
         storedFilteredUsers !== null &&

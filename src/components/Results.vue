@@ -46,6 +46,7 @@ export default defineComponent({
             return this.$emit('userClicked', user)
         },
         handleScroll() {
+            console.log('handleScroll')
             const bottomOfWindow =
                 document.documentElement.scrollHeight -
                 document.documentElement.clientHeight;
@@ -67,9 +68,11 @@ export default defineComponent({
             }
         },
         async handleRefresh() {
+            console.log('handleRefresh')
             try {
                 const allUsers = await this.store.getAllStoredUsers
                 const filteredUsers = await this.store.getfilteredUsers
+                console.log(filteredUsers)
                 if (filteredUsers.length !== 0) {
                     this.storedUsers = filteredUsers
                 }
