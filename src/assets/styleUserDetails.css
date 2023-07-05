@@ -21,6 +21,7 @@
 .userDetailsDisplayed .ui.card {
   border-radius: 20px;
   border: solid rgb(49, 49, 108) 1.5px;
+  background-color: aliceblue;
 }
 
 .userDetailsDisplayed h3 {
