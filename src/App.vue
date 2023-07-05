@@ -1,9 +1,19 @@
-<script setup lang="ts">
-import Homepage from '../src/views/Homepage.vue'
+<script lang="ts">
+import Results from '@/components/Results.vue';
+import UserDetails from '@/components/UserDetails.vue'
+
+export default {
+  components: {
+    Results,
+    UserDetails
+  },
+}
+
 </script>
 
 <template>
   <main>
-    <Homepage />
+    <UserDetails />
+    <Results />
   </main>
 </template>

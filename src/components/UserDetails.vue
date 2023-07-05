@@ -7,7 +7,7 @@ export default defineComponent({
     data() {
         const store = useStore()
         const user = store.getUser
-        const userDetailsClass = ''
+        const userDetailsClass = 'userDetailsHidden'
         return { store, user, userDetailsClass }
     },
     computed: {
@@ -17,7 +17,7 @@ export default defineComponent({
                 this.userDetailsClass = 'userDetailsHidden'
                 return this.user
             } else {
-                this.userDetailsClass = ''
+                this.userDetailsClass = 'userDetailsDisplayed'
                 return this.user
             }
 
@@ -31,9 +31,9 @@ export default defineComponent({
 <template>
     <div :class="userDetailsClass">
         <sui-card>
-            <sui-reveal animated="move">
-                <sui-reveal-content visible>
-                    <sui-image :src="`${displayedUser.picture?.thumbnail}`" />
+            <sui-reveal>
+                <sui-reveal-content visible class="userDetailsCard">
+                    <sui-image :src="`${displayedUser.picture?.large}`" />
                 </sui-reveal-content>
             </sui-reveal>
             <sui-card-content>
@@ -42,17 +42,19 @@ export default defineComponent({
                     <p>{{ displayedUser?.id?.value === null ? 'No ID found' : `${displayedUser.id?.name} :
                                             ${displayedUser?.id?.value}` }}</p>
                 </sui-card-header>
-                <sui-card-meta>
-                    <h3>Contact</h3>
-                    <p>{{ displayedUser?.email }}</p>
-                    <p>{{ displayedUser?.phone }}</p>
-                </sui-card-meta>
                 <sui-card-description>
-                    <h3>Address</h3>{{ displayedUser.location?.street.name }} {{ displayedUser.location?.street.number
-                    }}</br>{{
-    displayedUser.location?.postcode }} {{ displayedUser.location?.state }} {{
+                    <div class="descriptionItem">
+                        <h3>Contact</h3>
+                        <p>{{ displayedUser?.email }}</p>
+                        <p>{{ displayedUser?.phone }}</p>
+                    </div>
+                    <div class="descriptionItem">
+                        <h3>Address</h3>{{ displayedUser.location?.street.name }} {{ displayedUser.location?.street.number
+                        }}</br>{{
+    displayedUser.location?.postcode }} {{ displayedUser.location?.state }}</br>{{
         displayedUser.location?.country
     }}
+                    </div>
                 </sui-card-description>
             </sui-card-content>
         </sui-card>

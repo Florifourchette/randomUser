@@ -107,7 +107,7 @@ export default defineComponent({
 
 </script>
 <template>
-    <div>
+    <div class="resultContainer">
         <SearchBar :users="finalUsers" @newUsersArray="handleFilteredUsers" />
         <FilterGender :users="finalUsers" @newUsersArray="handleFilteredUsers" />
         <ResetAllFilters @filtersReset="handleFilteredUsers" />

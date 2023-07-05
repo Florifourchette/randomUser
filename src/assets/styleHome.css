@@ -1,0 +1,23 @@
+main {
+  display: flex;
+  flex-direction: row-reverse;
+  height: 100vh;
+}
+
+button {
+  align-self: center;
+  border: none;
+  color: aliceblue;
+  border-radius: 20px;
+  font-size: 1.2em;
+  padding: 0.2em;
+  width: 40%;
+  background-color: rgb(49, 49, 108);
+  margin: 1em;
+}
+
+button:hover {
+  color: rgb(49, 49, 108);
+  background-color: aliceblue;
+  border: 2px rgb(49, 49, 108) solid;
+}

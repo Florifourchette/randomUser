@@ -1,0 +1,15 @@
+.genderFilter {
+  margin: 0.5em 0 1em 0;
+  padding: 0;
+  display: flex;
+  width: 100%;
+}
+
+.ui.selection.dropdown {
+  border: 1.5px rgb(49, 49, 108) solid;
+  border-radius: 20px;
+  font-size: 1.3em;
+  padding: 0.5em 0 0.5em 1em;
+  width: 100%;
+  background-color: aliceblue;
+}

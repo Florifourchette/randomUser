@@ -1,0 +1,28 @@
+.resultContainer {
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.5em;
+}
+
+.infinite-scroll {
+  background-color: aliceblue;
+  border: solid aliceblue 1.5px;
+  overflow-y: auto;
+  height: 85%;
+}
+
+.resultContainer .ui.card {
+  display: flex;
+  flex-direction: row;
+  margin: 1em 0.5em 1em 0.5em;
+  cursor: pointer;
+}
+
+.resultContainer .ui.card:hover {
+  background-color: aliceblue;
+}
+
+.resultContainer .ui.card .content img {
+  width: 90%;
+  margin: 0.5em;
+}

@@ -34,10 +34,7 @@ export default {
 </script>
 
 <template>
-    <div>
-        <div class="ui action input">
-            <input type="text" placeholder="Search..." v-model="searchTerm" @input="handleInput">
-            <button class="ui button">Search</button>
-        </div>
+    <div class="searchBarContainer">
+        <input type="text" placeholder="Search..." v-model="searchTerm" @input="handleInput">
     </div>
 </template>
