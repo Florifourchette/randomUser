@@ -1,0 +1,90 @@
+@media only screen and (max-width: 640px) {
+  main {
+    flex-direction: column;
+  }
+
+  /* All style concerning the user details container */
+  .userDetailsDisplayed {
+    font-size: 0.8em;
+    margin: 1em;
+  }
+
+  .userDetailsDisplayed .ui.card {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .userDetailsDisplayed .ui.card .content img {
+    width: auto;
+    height: 40%;
+    margin: 0.5em;
+  }
+
+  .userDetailsDisplayed .ui.reveal > .visible.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .userDetailsDisplayed .ui.card > .content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: baseline;
+    padding: 0;
+  }
+
+  .userDetailsDisplayed .ui.card > .content > .header {
+    font-size: 1.8em;
+    margin: 0.5em 0 0.5em 0;
+  }
+
+  .userDetailsDisplayed .ui.card > .content > .description {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 0 0 0.5em 0;
+  }
+
+  .descriptionItem {
+    width: 40%;
+  }
+
+  /* All styles concerning the Results containers */
+  .resultContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 1em;
+    margin-right: 1em;
+    height: 80vh;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .userDetailsDisplayed .ui.card > .content > .header {
+    font-size: 1.3em;
+    margin: 0.5em 0 0.5em 0;
+  }
+
+  .userDetailsDisplayed .ui.card > .content > .description {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .descriptionItem {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 0.5em;
+  }
+
+  .userDetailsDisplayed h3 {
+    font-size: 1.2em;
+  }
+}

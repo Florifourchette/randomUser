@@ -1,0 +1,19 @@
+.searchBarContainer {
+  display: flex;
+  width: 100%;
+  margin: 1em 0 0.5em 0;
+  padding: 0;
+}
+
+input {
+  border: 1.5px rgb(49, 49, 108) solid;
+  border-radius: 20px;
+  font-size: 1.3em;
+  padding: 0.5em 0 0.5em 1em;
+  width: 100%;
+  background-color: aliceblue;
+}
+
+input:hover {
+  border: 1.5px grey solid;
+}

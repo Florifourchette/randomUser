@@ -55,7 +55,10 @@ export default {
 </script>
 
 <template>
-    <sui-dropdown placeholder="Search for gender" selection :options="options" v-model="current" @input="handleChange" />
+    <div class="genderFilter">
+        <sui-dropdown placeholder="Search for gender" selection :options="options" v-model="current"
+            @input="handleChange" />
+    </div>
 </template>
 
-
+<style scoped></style>
