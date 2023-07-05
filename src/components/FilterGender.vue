@@ -3,7 +3,7 @@ import { useStore } from '@/stores/store';
 
 export default {
     methods: {
-        handleChange() {
+        handleChange(): void {
             const store = useStore()
             const storedUsers = store.getAllUsers
             let filteredUsers: Array<Object> = []

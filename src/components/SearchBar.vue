@@ -3,7 +3,7 @@ import { useStore } from '@/stores/store';
 
 export default {
     methods: {
-        handleInput() {
+        handleInput(): void {
             const store = useStore()
             const storedUsers = store.getAllUsers
             this.searchTerm = this.searchTerm.toLowerCase()
