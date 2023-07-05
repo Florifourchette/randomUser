@@ -4,8 +4,6 @@ import { useStore } from '@/stores/store';
 export default {
     methods: {
         handleChange(): void {
-            console.log('filter activated')
-            console.log(this.current)
             const store = useStore()
             const storedUsers = store.getAllUsers
             let filteredUsers: Array<Object> = []
@@ -44,10 +42,8 @@ export default {
         };
     },
     mounted() {
-        console.log(JSON.parse(localStorage.getItem('filteredUsers')))
 
         const storedFilter = this.store.getGenderFilter
-        console.log(storedFilter)
 
         if (storedFilter !== null && storedFilter !== undefined) { return this.current = parseInt(this.store.getGenderFilter.toString()) }
     },

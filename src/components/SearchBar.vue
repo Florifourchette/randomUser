@@ -4,6 +4,7 @@ import { useStore } from '@/stores/store';
 export default {
     methods: {
         handleInput(): void {
+            console.log('handleinput')
             const store = useStore()
             const storedUsers = store.getAllUsers
             this.searchTerm = this.searchTerm.toLowerCase()
@@ -17,12 +18,15 @@ export default {
     },
     data() {
         const store = useStore()
-        const searchTerm: String = ''
+        const searchTerm: String = store.getSearchFilter
         return { searchTerm, store }
     },
     mounted() {
         const storedFilter = this.store.getSearchFilter
-        if (storedFilter !== null && storedFilter !== undefined) { this.searchTerm = this.store.getSearchFilter }
+        if (storedFilter !== null && storedFilter !== undefined) { return this.searchTerm = this.store.getSearchFilter }
+        else {
+            return this.searchTerm = ''
+        }
     },
     watch: {
         searchTerm(searchTerm) {

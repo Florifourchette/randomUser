@@ -152,7 +152,16 @@ export const useStore = defineStore({
       }
     },
     getSearchFilter(): String {
-      return this.searchFilter;
+      const searchFilter = localStorage.getItem('searchFilter');
+      if (
+        searchFilter !== null &&
+        searchFilter !== undefined &&
+        searchFilter !== ''
+      ) {
+        return JSON.parse(searchFilter);
+      } else {
+        return this.searchFilter;
+      }
     },
     getAllStoredUsers(): Array<User> {
       const allStoredUsers = localStorage.getItem('allUsers');
