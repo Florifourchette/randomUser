@@ -1,5 +1,5 @@
 <script lang="ts">
-import Results from '@/components/Results.vue';
+import Results from '@/views/Results.vue';
 import UserDetails from '@/components/UserDetails.vue'
 
 export default {

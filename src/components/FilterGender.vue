@@ -1,4 +1,5 @@
 <script lang="ts">
+import type { User } from '@/interface/UserInterface';
 import { useStore } from '@/stores/store';
 
 export default {
@@ -6,24 +7,25 @@ export default {
         handleChange(): void {
             const store = useStore()
             const storedUsers = store.getAllUsers
-            let filteredUsers: Array<Object> = []
-            if (this.current === 2) {
+            store.setSearchFilter('')
+            let filteredUsers: Array<User> = []
+            if (this.gender === 2) {
                 filteredUsers = storedUsers.filter((user) => user.gender === 'female')
             }
-            else if (this.current === 1) {
+            else if (this.gender === 1) {
                 filteredUsers = storedUsers.filter((user) => user.gender === 'male')
             }
             else {
                 filteredUsers = storedUsers
             }
-
             return this.$emit('newUsersArray', filteredUsers)
-        }
+        },
     },
     data() {
-        const current: number = 3
+        const gender: number = 3
         const store = useStore()
-        const options: Array<Object> = [
+        const search: String = store.getSearchFilter
+        const options: Array<{ text: String, value: Number }> = [
             {
                 text: 'Male',
                 value: 1,
@@ -38,28 +40,29 @@ export default {
             },
         ]
         return {
-            options, current, store
+            options, gender, store, search
         };
     },
     mounted() {
-
         const storedFilter = this.store.getGenderFilter
+        if (storedFilter !== null && storedFilter !== undefined) {
+            return this.gender = parseInt(this.store.getGenderFilter.toString())
+        }
 
-        if (storedFilter !== null && storedFilter !== undefined) { return this.current = parseInt(this.store.getGenderFilter.toString()) }
     },
     watch: {
-        current(current) {
-            this.store.setGenderFilter(current)
+        gender(gender) {
+            console.log(this.gender)
+            this.store.setGenderFilter(gender)
         },
-
-    }
+    },
 }
 </script>
 
 <template>
     <div class="genderFilter">
         <b-form-group class="label" label="Search per gender:" label-cols-lg="2">
-            <b-form-select class="dropdown" v-model="current" :options="options" @input="handleChange">
+            <b-form-select class="dropdown" v-model="gender" :options="options" @input="handleChange">
             </b-form-select>
         </b-form-group>
     </div>

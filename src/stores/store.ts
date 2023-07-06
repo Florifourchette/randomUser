@@ -2,6 +2,14 @@ import { emptyUser } from '@/interface/emptyUser';
 import type { User } from '../interface/UserInterface';
 
 import { defineStore } from 'pinia';
+import { getLSUsers } from '@/utils/getters/getLSUsers';
+import { getLSFilteredUsers } from '@/utils/getters/getLSFilteredUsers';
+import { getLSFilter } from '@/utils/getters/getLSFilter';
+import { getLSUser } from '@/utils/getters/getLSUser';
+import { setLSUsers } from '@/utils/setters/setLSUsers';
+import { setLSAllUsers } from '@/utils/setters/setLSAllUsers';
+import { setLSFilter } from '@/utils/setters/setLSFilter';
+import { setLSUser } from '@/utils/setters/setLSUser';
 
 interface RootState {
   allUsers: Array<User>;
@@ -20,6 +28,8 @@ export const useStore = defineStore({
     genderFilter: '',
     searchFilter: '',
   }),
+
+  //All setters are setting the local storage before returning the values from Pinia store (expect for addUsers)
   actions: {
     addUsers(newUsers: Array<User>) {
       this.allUsers = this.allUsers.concat(newUsers);
@@ -27,159 +37,85 @@ export const useStore = defineStore({
     },
 
     setAllUsersLS(newUsers: Array<User>) {
-      if (localStorage.getItem('allUsers')) {
-        localStorage.allUsers = JSON.stringify(
-          JSON.parse(localStorage.allUsers).concat(newUsers)
-        );
-      } else {
-        localStorage.setItem('allUsers', JSON.stringify(newUsers));
-      }
+      setLSAllUsers(newUsers);
     },
     setFilteredUsers(newUsers: Array<User>) {
-      localStorage.setItem('filteredUsers', JSON.stringify(newUsers));
-      const storedUsers = localStorage.getItem('filteredUsers');
-
-      if (
-        storedUsers !== null &&
-        storedUsers !== undefined &&
-        storedUsers !== 'undefined'
-      ) {
-        this.filteredUsers = JSON.parse(storedUsers);
-      }
+      this.filteredUsers = setLSUsers('filteredUsers', newUsers);
       return this.filteredUsers;
     },
     setGenderFilter(newFilter: String) {
-      localStorage.setItem('genderFilter', JSON.stringify(newFilter));
-      const storedFilter = localStorage.getItem('genderFilter');
-      if (
-        storedFilter !== null &&
-        storedFilter !== undefined &&
-        storedFilter !== 'undefined'
-      ) {
-        this.genderFilter = JSON.parse(storedFilter);
-      }
-
-      return this.filteredUsers;
+      this.genderFilter = setLSFilter('genderFilter', newFilter);
+      return this.genderFilter;
     },
     setSearchFilter(newSearch: String) {
-      localStorage.setItem('searchFilter', JSON.stringify(newSearch));
-
-      const storedFilter = localStorage.getItem('searchFilter');
-
-      if (
-        storedFilter !== null &&
-        storedFilter !== undefined &&
-        storedFilter !== 'undefined'
-      ) {
-        this.searchFilter = JSON.parse(storedFilter);
-      }
-
-      return this.filteredUsers;
+      this.genderFilter = setLSFilter('searchFilter', newSearch);
+      return this.genderFilter;
     },
     setUser(newUser: User) {
-      localStorage.setItem('user', JSON.stringify(newUser));
-      const storedUser = localStorage.getItem('user');
-      if (
-        storedUser !== null &&
-        storedUser !== undefined &&
-        storedUser !== 'undefined'
-      ) {
-        this.user = JSON.parse(storedUser);
-      }
+      this.user = setLSUser(newUser);
       return this.user;
     },
   },
   getters: {
+    //All getters follow the same process. Retrieve data from Local Storage, check if data is correct, modify the Pinia store data and returning the Pinia store data
     getAllUsers(): Array<User> {
-      console.log('get AllUsers started');
+      //retrieve data from local storage if there is a filter, then the filtered data will be displaying otherwise the complete array of users will be showing if none of them is in the local storage then the users from Pinia store will be showing
+
       let displayedUsers: Array<User> = [];
-      const storedUsers = localStorage.getItem('allUsers');
-      if (
-        storedUsers !== null &&
-        storedUsers !== undefined &&
-        storedUsers !== 'undefined'
-      ) {
-        displayedUsers = JSON.parse(storedUsers);
-      } else {
-        displayedUsers = this.allUsers;
-      }
+      let filteredUsers: Array<User> = [];
 
-      console.log(displayedUsers);
+      displayedUsers = getLSUsers();
+      filteredUsers = getLSFilteredUsers();
 
-      let storedFilteredUsers: string | null =
-        localStorage.getItem('filteredUsers');
+      filteredUsers.length === 0
+        ? displayedUsers
+        : (this.allUsers = filteredUsers);
 
-      if (
-        storedFilteredUsers !== null &&
-        storedFilteredUsers !== undefined &&
-        storedFilteredUsers !== ''
-      ) {
-        console.log(
-          "storedFilteredUsers !== null && storedFilteredUsers !== undefined &&storedFilteredUsers !== 'undefined'"
-        );
-        this.allUsers = JSON.parse(storedFilteredUsers);
-      } else {
-        console.log('else');
-        this.allUsers = displayedUsers;
-      }
+      displayedUsers.length === 0
+        ? this.allUsers
+        : (this.allUsers = displayedUsers);
 
-      this.allUsers = displayedUsers;
       return this.allUsers;
     },
     getfilteredUsers(): Array<User> {
-      const filteredUsersL = localStorage.getItem('filteredUsers');
-      if (
-        filteredUsersL !== null &&
-        filteredUsersL !== undefined &&
-        filteredUsersL !== 'undefined'
-      ) {
-        this.filteredUsers = JSON.parse(filteredUsersL);
-      }
+      //trying to get the filtered array from the Local Storage, if no array, the return the filtered users from the Pinia store - particularly important for the search bar upon refreshing
+      let filteredUsers: Array<User> = [];
+
+      filteredUsers = getLSFilteredUsers();
+
+      filteredUsers.length === 0
+        ? this.filteredUsers
+        : (this.filteredUsers = filteredUsers);
+
       return this.filteredUsers;
     },
     getGenderFilter(): String {
-      const genderFilter = localStorage.getItem('genderFilter');
-      if (
-        genderFilter !== null &&
-        genderFilter !== undefined &&
-        genderFilter !== ''
-      ) {
-        return JSON.parse(genderFilter);
-      } else {
-        return this.genderFilter;
-      }
+      let genderFilter: String = '';
+      genderFilter = getLSFilter('genderFilter');
+      genderFilter === ''
+        ? this.genderFilter
+        : (this.genderFilter = genderFilter);
+      return this.genderFilter;
     },
     getSearchFilter(): String {
-      const searchFilter = localStorage.getItem('searchFilter');
-      if (
-        searchFilter !== null &&
-        searchFilter !== undefined &&
-        searchFilter !== ''
-      ) {
-        return JSON.parse(searchFilter);
-      } else {
-        return this.searchFilter;
-      }
+      let searchFilter: String = '';
+      searchFilter = getLSFilter('searchFilter');
+
+      searchFilter === ''
+        ? this.searchFilter
+        : (this.searchFilter = searchFilter);
+      return this.searchFilter;
     },
     getAllStoredUsers(): Array<User> {
-      const allStoredUsers = localStorage.getItem('allUsers');
-      if (
-        allStoredUsers !== null &&
-        allStoredUsers !== undefined &&
-        allStoredUsers !== 'undefined'
-      ) {
-        return JSON.parse(allStoredUsers);
-      } else {
-        return this.allUsers;
-      }
+      let allUsers: Array<User> = [];
+      allUsers = getLSUsers();
+      allUsers.length === 0
+        ? this.allUsers
+        : (this.allUsers = allUsers);
+      return this.allUsers;
     },
     getUser(): User {
-      const user = localStorage.getItem('user');
-      if (user !== null && user !== undefined) {
-        this.user = JSON.parse(user);
-      } else {
-        this.user = emptyUser;
-      }
+      this.user = getLSUser(this.user);
       return this.user;
     },
   },
