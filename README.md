@@ -1,6 +1,7 @@
 # randomUser
 
 This project has been created with Vue 2 and uses the local storage. 
+And it has been deployed using Render: [randomUserVue](https://randomuservue.onrender.com/)
 
 ## Libraries
 It uses the following libraries:
