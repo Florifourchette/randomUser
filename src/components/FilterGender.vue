@@ -1,6 +1,7 @@
 <script lang="ts">
 import type { User } from '@/interface/UserInterface';
 import { useStore } from '@/stores/store';
+import { eventBus } from '@/utils/eventBus';
 
 export default {
     methods: {
@@ -18,8 +19,12 @@ export default {
             else {
                 filteredUsers = storedUsers
             }
+            eventBus.$emit('clearSearchTerm');
             return this.$emit('newUsersArray', filteredUsers)
         },
+        clearGenderInput() {
+            this.gender = 3
+        }
     },
     data() {
         const gender: number = 3
@@ -56,6 +61,12 @@ export default {
             this.store.setGenderFilter(gender)
         },
     },
+    created() {
+        eventBus.$on('clearGenderInput', this.clearGenderInput);
+    },
+    beforeDestroy() {
+        eventBus.$off('clearGenderInput', this.clearGenderInput);
+    }
 }
 </script>
 
