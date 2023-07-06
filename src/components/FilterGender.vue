@@ -57,7 +57,6 @@ export default {
     },
     watch: {
         gender(gender) {
-            console.log(this.gender)
             this.store.setGenderFilter(gender)
         },
     },

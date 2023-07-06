@@ -36,7 +36,6 @@ export default {
     },
     watch: {
         searchTerm(searchTerm) {
-            console.log(searchTerm)
             this.store.setSearchFilter(searchTerm)
         },
     },
