@@ -1,14 +1,22 @@
 <script lang="ts">
-import SearchBar from './SearchBar.vue';
-import FilterGender from './FilterGender.vue'
-import ResetAllFilters from './ResetAllFilters.vue';
+//Vue modules
+import { defineComponent } from 'vue';
+
+//components
+import SearchBar from '@/components/SearchBar.vue';
+import FilterGender from '@/components/FilterGender.vue'
+import ResetAllFilters from '@/components/ResetAllFilters.vue';
+
+//interface
 import type { User } from '../interface/UserInterface'
 
+//third-party library modules
 import infiniteScroll from 'vue-infinite-scroll'
 
-import { callRandomUSers } from '../utils/Apicall'
-import { defineComponent } from 'vue';
+//custom modules
 import { useStore } from '@/stores/store';
+import { handleAPI } from '@/utils/handleAPI';
+
 
 
 export default defineComponent({
@@ -17,17 +25,9 @@ export default defineComponent({
         infiniteScroll: infiniteScroll,
     },
     methods: {
-        handleMoreUsers() {
-            callRandomUSers()
-                .then((data: Array<Object>) => {
-                    const users: Array<User> = data.map((user) => {
-                        return { email: user.email, gender: user.gender, location: user.location, name: user.name, phone: user.phone, picture: user.picture, id: user.id }
-                    })
-                    this.store.addUsers(users);
-                    this.store.setAllUsersLS(users)
-                    this.storedUsers = this.store.getAllUsers
-                    return this.storedUsers;
-                }).catch((error) => console.log(error))
+        async handleMoreUsers() {
+            this.storedUsers = await handleAPI()
+            return this.storedUsers
         },
 
         handleFilteredUsers(filteredUsers: Array<User>) {
@@ -45,25 +45,14 @@ export default defineComponent({
             this.store.setUser(user)
             return this.$emit('userClicked', user)
         },
-        handleScroll() {
+        async handleScroll() {
             const bottomOfWindow =
                 document.documentElement.scrollHeight -
                 document.documentElement.clientHeight;
 
             if (this.scrollPosition >= bottomOfWindow) {
-                callRandomUSers()
-                    .then((data: Array<Object>) => {
-                        const users: Array<User> = data.map((user) => {
-                            return { email: user.email, gender: user.gender, location: user.location, name: user.name, phone: user.phone, picture: user.picture, id: user.id }
-                        })
-                        this.store.addUsers(users);
-                        this.store.setAllUsersLS(users)
-                        this.storedUsers = this.store.getAllUsers
-                        return this.storedUsers;
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
+                this.storedUsers = await handleAPI()
+                return this.storedUsers
             }
         },
         async handleRefresh() {
