@@ -1,6 +1,6 @@
 # randomUser
 
-This project has been created with Vue 2. 
+This project has been created with Vue 2 and uses the local storage. 
 
 ## Libraries
 It uses the following libraries:
