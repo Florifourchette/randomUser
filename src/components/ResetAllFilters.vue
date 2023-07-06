@@ -1,5 +1,6 @@
 <script lang="ts">
 import { emptyUser } from '@/interface/emptyUser';
+import { eventBus } from '@/utils/eventBus';
 
 import { useStore } from '@/stores/store';
 import { defineComponent } from 'vue';
@@ -13,6 +14,8 @@ export default defineComponent({
             store.setSearchFilter('')
             store.setFilteredUsers(allUsers)
             store.setUser(emptyUser)
+            eventBus.$emit('clearGenderInput')
+            eventBus.$emit('clearSearchTerm');
             return this.$emit('filtersReset', allUsers)
         }
     }
