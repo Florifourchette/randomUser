@@ -9,6 +9,7 @@
   border: solid aliceblue 1.5px;
   overflow-y: auto;
   height: 85%;
+  width: 30em;
 }
 
 .resultContainer .card {
