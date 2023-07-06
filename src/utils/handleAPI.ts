@@ -2,7 +2,7 @@ import type { User } from '@/interface/UserInterface';
 import { useStore } from '@/stores/store';
 import { callRandomUSers } from './Apicall';
 
-export async function handleAPI(): Promise<Array<User>> {
+export function handleAPI(): Promise<Array<User>> {
   const store = useStore();
   let users: Array<User> = [];
   console.log('handleAPI');
