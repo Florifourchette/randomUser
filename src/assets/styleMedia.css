@@ -104,9 +104,10 @@
   main {
     display: flex;
     flex-direction: column-reverse;
-    justify-content: flex-end;
     align-items: center;
-    max-width: 20em;
+    width: 100%;
+    min-width: 10em;
+    max-width: 50em;
   }
   .resultContainer {
     width: 93%;
@@ -114,6 +115,12 @@
     max-width: 25em;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .resultContainer .card {
+    flex-wrap: wrap;
   }
 
   .resultContainer .infinite-scroll {
@@ -123,28 +130,36 @@
     height: 80%;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
   }
 
   .resultContainer .card-body p {
     font-size: 0.8em;
+    padding: 0;
+    margin: 0;
+    width: 200em;
   }
   .resultContainer .card-body {
     margin: 0;
-    padding: 3px;
   }
 
   .resultContainer .card-img-left {
     margin: 0;
   }
 
+  .resultContainer h6 {
+    font-size: 0.7em;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
   .userDetailsDisplayed .card {
     display: flex;
-    width: 90%;
+    width: 80%;
     min-width: 20em;
     max-width: 30em;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
   }
   .userDetailsDisplayed .card-header {
     width: 50%;
