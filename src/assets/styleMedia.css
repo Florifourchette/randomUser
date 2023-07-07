@@ -1,4 +1,4 @@
-@media only screen and (max-width: 690px) {
+@media only screen and (max-width: 800px) {
   main {
     display: flex;
     flex-direction: column-reverse;
@@ -68,7 +68,7 @@
   }
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 550px) {
   .userDetailsDisplayed .ui.card > .content > .header {
     font-size: 1.3em;
     margin: 0.5em 0 0.5em 0;
