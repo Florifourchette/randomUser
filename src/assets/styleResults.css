@@ -17,6 +17,7 @@
   flex-direction: row;
   margin: 1em 0.5em 1em 0.5em;
   cursor: pointer;
+  overflow-x: hidden;
 }
 
 .resultContainer .card:hover {
